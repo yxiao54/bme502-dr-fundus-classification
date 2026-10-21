@@ -11,8 +11,8 @@ The images are too large for GitHub and are hosted on Google Drive.
 
 | File | Size | Contents | Link |
 |---|---|---|---|
-| `train_val.zip` | 102 MB | 5,012 train + 715 validation images, `train.csv`, `val.csv` (with labels) | _TODO: add Google Drive link_ |
-| `test_images.zip` | 26 MB | 1,420 test images, `test_images.csv` (**no labels**) | _TODO: add Google Drive link_ |
+| `train_val.zip` | 102 MB | 5,012 train + 715 validation images, `train.csv`, `val.csv` (with labels) | [Google Drive](https://drive.google.com/file/d/1qKhlWGLvTDMPcT37DpYTpyZUX8LBqUBz/view?usp=sharing) |
+| `test_images.zip` | 26 MB | 1,420 test images, `test_images.csv` (**no labels**) | [Google Drive](https://drive.google.com/file/d/1sAAaHZn_qhjwUtRkg4qskqUt0qbkzYEp/view?usp=sharing) |
 
 ## Dataset
 
