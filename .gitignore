@@ -1,0 +1,8 @@
+# data lives on Google Drive, never in git
+dr_release/
+images/
+*.zip
+# teacher-only files: hidden test labels and image-source mapping
+teacher_private/
+*_private.csv
+__pycache__/
