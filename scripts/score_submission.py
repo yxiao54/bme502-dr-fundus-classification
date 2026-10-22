@@ -3,7 +3,8 @@
 Usage:
     python -I scripts/score_submission.py HIDDEN_LABELS_PRIVATE.csv SUBMISSION.csv
 
-SUBMISSION.csv columns: image, prob_dr   (probability that the image is DR)
+SUBMISSION.csv columns: image, prob_dr   (probability that the image is DR),
+produced by running the student's predict.py on the hidden images.
 Reports overall and per-source accuracy, F1 and AUC at threshold 0.5.
 """
 import csv, sys
