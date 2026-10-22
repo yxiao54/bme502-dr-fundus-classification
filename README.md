@@ -3,15 +3,15 @@
 A classroom dataset of colour fundus photographs for practising binary image
 classification: **normal** (label `normal`) vs. **diabetic retinopathy** (label `dr`).
 Images are merged from two public sources, de-duplicated, resized to 256×256 and
-split into train / validation / test (all labelled) and a hidden set that only the instructor holds (images and labels).
+split into train / validation / test (all labelled) and a hidden set whose images are released but whose labels only the instructor holds.
 
 ## Download
 
-The images are too large for GitHub and are hosted on Google Drive. The hidden set is not published anywhere.
+The images are too large for GitHub and are hosted on Google Drive.
 
 | File | Size | Contents | Link |
 |---|---|---|---|
-| `train_val_test.zip` | 114 MB | 5,012 train + 715 validation + 705 test images, with `train.csv`, `val.csv`, `test.csv` (labels included) | [Google Drive](https://drive.google.com/file/d/1qKhlWGLvTDMPcT37DpYTpyZUX8LBqUBz/view?usp=sharing) |
+| `dataset.zip` | 127 MB | 5,012 train + 715 val + 705 test images with `train.csv`, `val.csv`, `test.csv` (labels included); 715 hidden images with `hidden_images.csv` (**no labels**) | [Google Drive](https://drive.google.com/file/d/1qKhlWGLvTDMPcT37DpYTpyZUX8LBqUBz/view?usp=sharing) |
 
 ## Dataset
 
@@ -20,7 +20,7 @@ The images are too large for GitHub and are hosted on Google Drive. The hidden s
 | train | 2,826 | 2,186 | 5,012 |
 | val | 404 | 311 | 715 |
 | test (labelled) | 394 | 311 | 705 |
-| hidden (instructor only, not published) | 397 | 318 | 715 |
+| hidden (images only, labels held by instructor) | 397 | 318 | 715 |
 | **all** | **4,021** | **3,126** | **7,147** |
 
 Image format: RGB JPEG, 256×256. Originals are padded with black to a square
@@ -60,26 +60,24 @@ are 224×224 with swapped colour channels.
 
 ## Assignment (student version)
 
-1. Download `train_val_test.zip` and train a binary classifier on `train/`; tune on `val/`.
+1. Download `dataset.zip` and train a binary classifier on `train/`; tune on `val/`.
 2. Evaluate **once**, at the end, on `test/` and report your test accuracy. Do not tune on it.
-3. Submit your notebook, your trained model file, and a `predict.py` that exposes
-   `predict(image_path: str) -> float`, returning the probability of DR for one
-   256×256 RGB JPEG.
-4. The instructor runs your `predict.py` on the hidden set, which students never see,
-   and grades on it.
+3. Predict `prob_dr` (probability of DR) for every image in `hidden/`.
+4. Submit `submission.csv` with columns `image,prob_dr`, plus your notebook.
+5. Do not look for or use the original datasets' labels for the hidden images.
 
-Compare your own test accuracy with your hidden-set result (reported back to you):
-a large gap suggests the test set was used for tuning.
+Grading uses the hidden set. Compare your own test accuracy with your hidden-set
+result: a large gap suggests the test set was used for tuning.
 
 ## Repository layout
 
 ```
 scripts/build_dataset.py      rebuilds the dataset from the extracted source folders
-scripts/score_submission.py   instructor-only scoring of predictions against the hidden labels
+scripts/score_submission.py   instructor-only scoring of a submission against the hidden labels
 scripts/requirements.txt
 ```
 
-`teacher_private/` (hidden images, hidden labels and the image-to-source mapping) is
+`teacher_private/` (hidden labels and the image-to-source mapping) is
 git-ignored and must never be committed or shared with students.
 
 ## Rebuilding

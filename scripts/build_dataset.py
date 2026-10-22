@@ -8,7 +8,7 @@ RELEASE_DIR gets the student-facing files (images, train/val/test CSVs, zips).
 PRIVATE_DIR gets the teacher-only files (hidden labels, source mapping).
 
 Splits: train 70%, val 10%, test 10% (labelled, given to students) and
-hidden 10% (images and labels both stay with the instructor, in PRIVATE_DIR).
+hidden 10% (images are released, labels stay with the instructor in PRIVATE_DIR).
 """
 import csv, hashlib, os, random, re, shutil, sys, zipfile
 from collections import defaultdict
@@ -98,21 +98,22 @@ def main(work, release, private):
     items = collect(work)
     assign(items, rng, random.Random(SEED + 1))
     rng.shuffle(items)
-    def out_dir(split):  # hidden images never go into the release folder
-        return (private / "hidden_images") if split == "hidden" else (release / "images" / split)
-
     for split in SPLITS:
-        out_dir(split).mkdir(parents=True)
+        (release / "images" / split).mkdir(parents=True)
     rows = []
     for i, it in enumerate(items):
         name = f"img_{i:05d}.jpg"
-        preprocess(it["path"], out_dir(it["split"]) / name)
+        preprocess(it["path"], release / "images" / it["split"] / name)
         rows.append(dict(image=name, label=it["label"], split=it["split"], source=it["source"], orig=it["orig"]))
     for split in ("train", "val", "test"):
         with open(release / f"{split}.csv", "w", newline="") as f:
             w = csv.writer(f)
             w.writerow(["image", "label"])
             w.writerows((r["image"], r["label"]) for r in rows if r["split"] == split)
+    with open(release / "hidden_images.csv", "w", newline="") as f:  # no labels
+        w = csv.writer(f)
+        w.writerow(["image"])
+        w.writerows([r["image"]] for r in rows if r["split"] == "hidden")
     with open(private / "all_images_private.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0]))
         w.writeheader()
@@ -121,7 +122,7 @@ def main(work, release, private):
         w = csv.writer(f)
         w.writerow(["image", "label", "source"])
         w.writerows((r["image"], r["label"], r["source"]) for r in rows if r["split"] == "hidden")
-    # one student archive: train + val + test with labels
+    # one student archive: train/val/test with labels, hidden without
     def pack(zpath, splits, extra):
         with zipfile.ZipFile(zpath, "w", zipfile.ZIP_STORED) as z:
             for s in splits:
@@ -129,7 +130,8 @@ def main(work, release, private):
                     z.write(p, f"{s}/{p.name}")
             for e in extra:
                 z.write(release / e, e)
-    pack(release / "train_val_test.zip", ["train", "val", "test"], ["train.csv", "val.csv", "test.csv"])
+    pack(release / "dataset.zip", ["train", "val", "test", "hidden"],
+         ["train.csv", "val.csv", "test.csv", "hidden_images.csv"])
     tally = defaultdict(int)
     for r in rows:
         tally[(r["split"], r["source"], r["label"])] += 1
