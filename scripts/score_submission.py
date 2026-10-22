@@ -1,7 +1,7 @@
-"""Score a student submission against the hidden test labels (teacher only).
+"""Score a student submission against the hidden labels (teacher only).
 
 Usage:
-    python -I scripts/score_submission.py TEST_LABELS_PRIVATE.csv SUBMISSION.csv
+    python -I scripts/score_submission.py HIDDEN_LABELS_PRIVATE.csv SUBMISSION.csv
 
 SUBMISSION.csv columns: image, prob_dr   (probability that the image is DR)
 Reports overall and per-source accuracy, F1 and AUC at threshold 0.5.
@@ -15,7 +15,7 @@ def main(truth_path, sub_path):
     sub = {r["image"]: float(r["prob_dr"]) for r in csv.DictReader(open(sub_path))}
     missing = set(truth) - set(sub)
     if missing:
-        sys.exit(f"submission is missing {len(missing)} test images")
+        sys.exit(f"submission is missing {len(missing)} hidden images")
     for name, keep in [("all", None), ("odir", "odir"), ("mendeley", "mendeley")]:
         ids = [i for i in truth if keep is None or truth[i]["source"] == keep]
         y = [truth[i]["label"] == "dr" for i in ids]
