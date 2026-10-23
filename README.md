@@ -58,15 +58,8 @@ source collections were kept only once.
 - **ODIR images are split by patient**: both eyes of a patient, including patients
   with one normal and one DR eye (236 of them), always land in the same split.
   No patient appears in more than one split (verified).
-- **Mendeley images have no subject information.** The Mendeley dataset and its data
-  paper (Sharmin et al., *Data in Brief* 2024) give no patient or eye identifiers,
-  nor how many images were taken per patient. We therefore split the Mendeley images
-  randomly, image by image. By inspection, some images look like repeated shots of the same eye (in
-  the original numbering, neighbouring files are noticeably more similar than random
-  pairs), so images of the same eye can end up on different sides of a split. Scores
-  on Mendeley images are therefore likely optimistic; the ODIR images are split by
-  patient and are not affected. We recommend reporting results per source (see
-  `metadata.csv`).
+- **Mendeley images have no patient information**, so they are split randomly, image
+  by image; images of the same eye may therefore appear in different splits.
 
 ### Things to think about
 
@@ -74,6 +67,9 @@ source collections were kept only once.
   images, and the two sources look different (circle shape, colour, resolution).
   A model can score well partly by recognising the source. Does your model perform
   equally well on both kinds of image?
+- **Mendeley scores may be too optimistic.** Because Mendeley images are split image
+  by image, results on them are likely higher than on ODIR images. Compare the two
+  (see `metadata.csv`): which would you trust more, and why?
 - Classes are mildly imbalanced (56% normal); consider F1 and AUC, not just accuracy.
 - The labels come from the source datasets and were not re-checked by us.
 
