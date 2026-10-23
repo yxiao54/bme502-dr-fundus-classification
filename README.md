@@ -11,8 +11,10 @@ The images are too large for GitHub and are hosted on Google Drive.
 
 | File | Size | Contents | Link |
 |---|---|---|---|
-| `train_val_test.zip` | 114 MB | 5,012 train + 715 val + 705 test images, with `train.csv`, `val.csv`, `test.csv` (labels included) | [Google Drive](https://drive.google.com/file/d/1qKhlWGLvTDMPcT37DpYTpyZUX8LBqUBz/view?usp=sharing) |
-| `hidden_images.zip` | 13 MB | 715 hidden images, `hidden_images.csv` (**no labels**) | _TODO: add Google Drive link_ |
+| `train_val_test.zip` | 114 MB | 5,012 train + 715 val + 705 test images, with `train.csv`, `val.csv`, `test.csv` (labels included) | [Google Drive](https://drive.google.com/file/d/13LAkbYtJi9Imwhvaef5v03r_TNCxpGP8/view?usp=sharing) |
+| `hidden_images.zip` | 13 MB | 715 hidden images, `hidden_images.csv` (**no labels**) | [Google Drive](https://drive.google.com/file/d/1CF3Tj6vLqWVd1MNRmfZw3uxygvHrZoUS/view?usp=sharing) |
+
+**Access:** please open the links with your ASU account. They are not available to other accounts.
 
 ## Dataset
 
