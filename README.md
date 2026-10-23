@@ -103,8 +103,9 @@ source collections were kept only once.
     differently if you had patient IDs?
 - **Does your model work equally well for everyone?** For ODIR images you also have
   `age` and `sex`. Compare your results across sexes and across age groups (for
-  example under 50, 50 to 65, over 65). Are the differences larger than you would
-  expect from random variation, given how few images some groups contain? If a group
+  example under 50, 50 to 65, over 65). Some groups contain few images, so decide for
+  yourself how to define the groups and which images to pool to get reliable numbers.
+  Are the differences larger than you would expect from random variation? If a group
   does worse, what could explain it, and why does it matter for a model that might be
   used in a clinic?
 - Classes are mildly imbalanced (56% normal); consider F1 and AUC, not just accuracy.
