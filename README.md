@@ -2,6 +2,10 @@
 
 BME 502: Fundamentals of AI Medical Apps (Fall 2026 B)
 
+**Release history** (newest first)
+
+- **v1.0, 2026-10-23:** first release.
+
 A dataset of colour fundus photographs for practising binary image classification:
 **normal** (label `normal`) vs. **diabetic retinopathy** (label `dr`). Images are
 merged from two public sources, de-duplicated, cropped to the fundus and resized to
