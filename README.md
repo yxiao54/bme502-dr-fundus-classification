@@ -4,9 +4,10 @@ BME 502: Fundamentals of AI Medical Apps (Fall 2026 B)
 
 A dataset of colour fundus photographs for practising binary image classification:
 **normal** (label `normal`) vs. **diabetic retinopathy** (label `dr`). Images are
-merged from two public sources, de-duplicated and resized to 256×256. They are split
-into train / validation / test (all labelled) and a hidden set whose images are
-released but whose labels are withheld.
+merged from two public sources, de-duplicated, cropped to the fundus and resized to
+256×256 (the original-resolution images are also available). They are split into
+train / validation / test (all labelled) and a hidden set whose images are released
+but whose labels are withheld.
 
 ## Download
 
@@ -14,35 +15,26 @@ The images are too large for GitHub and are hosted on Google Drive.
 
 | File | Size | Contents | Link |
 |---|---|---|---|
-| `train_val_test.zip` | 119 MB | 5,012 train + 715 val + 705 test images, with `train.csv`, `val.csv`, `test.csv` (labels included) | [Google Drive](https://drive.google.com/file/d/13LAkbYtJi9Imwhvaef5v03r_TNCxpGP8/view?usp=sharing) |
-| `hidden_images.zip` | 13 MB | 715 hidden images, `hidden_images.csv` (**no labels**) | [Google Drive](https://drive.google.com/file/d/1CF3Tj6vLqWVd1MNRmfZw3uxygvHrZoUS/view?usp=sharing) |
+| `train_val_test.zip` | 117 MB | 5,012 train + 715 val + 705 test images, with `train.csv`, `val.csv`, `test.csv` (labels included) | [Google Drive](https://drive.google.com/file/d/1hgfg4Skm6gQVdOQtrjjRLXKvXWXY7PKZ/view?usp=sharing) |
+| `hidden_images.zip` | 13 MB | 715 hidden images, `hidden_images.csv` (**no labels**) | [Google Drive](https://drive.google.com/file/d/11sDqpSBURHdlZy_a0M8QRbfHhLSPie1O/view?usp=sharing) |
+
+**Access:** please open the links with your ASU account. They are not available to other accounts.
 
 ### Raw images (optional)
 
-The 256×256 images above were resized by us. If you would rather choose the
-resolution, cropping and padding yourself, the original-resolution images are also
-available. They use the same file names, splits and CSVs as the 256×256 version.
+If you would rather choose the resolution, cropping and padding yourself, the
+original-resolution images are also available. They use the same file names, splits
+and CSVs as the 256×256 version.
 
 | File | Size | Contents | Link |
 |---|---|---|---|
-| `raw_train_val_test.zip` | 1.6 GB | Same images as `train_val_test.zip`, at original resolution | _TODO: add Google Drive link_ |
-| `raw_hidden_images.zip` | 170 MB | Same images as `hidden_images.zip`, at original resolution | _TODO: add Google Drive link_ |
+| `raw_train_val_test.zip` | 1.6 GB | Same images as `train_val_test.zip`, at original resolution | [Google Drive](https://drive.google.com/file/d/1DOPxUj6Xb4EX5zu9BdFyfXx4mayS8Rki/view?usp=sharing) |
+| `raw_hidden_images.zip` | 170 MB | Same images as `hidden_images.zip`, at original resolution | [Google Drive](https://drive.google.com/file/d/1xv7SLA83gFvqzDdrxIMGJrP1PpK6YCOz/view?usp=sharing) |
 
 The raw images vary in size (Mendeley: 2004×1690; ODIR: many sizes, often wide with
 black borders), so you must unify them yourself before training. Image size and
 aspect ratio also reveal the source dataset, so think about how your preprocessing
 interacts with that. The assignment can be done entirely with the 256×256 version.
-
-**Access:** please open the links with your ASU account. They are not available to other accounts.
-
-**Metadata:** `metadata.csv` in this repository has one row per image, hidden ones
-included, and no labels. Columns: `split`, `source` (`odir` or `mendeley`) and, for
-ODIR images only, `patient_group` (an anonymised patient; both eyes of a patient share
-it), `eye`, `age` and `sex`. These last four are empty for Mendeley images, which
-come with no patient information.
-Download it with the *Download raw file* button on its
-[GitHub page](metadata.csv), or directly from
-<https://raw.githubusercontent.com/yxiao54/bme502-dr-fundus-classification/main/metadata.csv>.
 
 ## Dataset
 
@@ -54,18 +46,31 @@ Download it with the *Download raw file* button on its
 | hidden (images only, labels withheld) | 397 | 318 | 715 |
 | **all** | **4,021** | **3,126** | **7,147** |
 
-Image format: RGB JPEG, 256×256. Originals are padded with black to a square
-(never cropped or stretched) before resizing. File names are neutral
-(`img_00000.jpg`) and carry no label or source information; use `metadata.csv` to look up the source.
+Image format: RGB JPEG, 256×256. Each image was cropped to the fundus (black borders
+removed), padded with black to a square (never stretched) and resized. File names
+are neutral (`img_00000.jpg`) and carry no label or source information.
 
-Each labelled CSV has the columns `image,label`, where `label` is `normal` or `dr`.
-Encode them as you like, for example `normal` = 0 and `dr` = 1.
+### CSV files
+
+Every CSV has one row per image with these columns:
+
+| Column | Meaning |
+|---|---|
+| `image` | file name |
+| `label` | `normal` or `dr` (train, val and test CSVs only; encode as you like, e.g. `normal` = 0, `dr` = 1) |
+| `source` | `odir` or `mendeley` |
+| `patient_group` | anonymised patient; both eyes of a patient share it (ODIR only) |
+| `eye` | `left` or `right` (ODIR only) |
+| `age`, `sex` | patient age and sex (ODIR only) |
+
+The last four columns are empty for Mendeley images, which come with no patient
+information.
 
 ### Sources
 
 | Source | Normal | DR | Notes |
 |---|---|---|---|
-| ODIR-2019 (via the Kaggle *Ocular Disease Dataset* by Manan_1717) | 2,997 | 1,619 | Round fundus images, about 1570 px. Left/right eye of the same patient share an ID. |
+| ODIR-5K (ODIR-2019 Grand Challenge) | 2,997 | 1,619 | Many image sizes, often wide with black borders. Left/right eye of the same patient share an ID. Age and sex come from the original ODIR annotations. |
 | Mendeley *Eye Disease Image Dataset* (Rashid et al., 2024) | 1,024 | 1,507 | Images from two eye hospitals in Bangladesh; 2004×1690 px, top and bottom of the circle are cut off. |
 
 Cleaning: exact duplicate images were removed, and images that appear in both
@@ -73,7 +78,7 @@ source collections were kept only once.
 
 ### How the split was made
 
-- 70 / 10 / 10 / 10 split into train / val / test / hidden, seed 2026, stratified by (source × class).
+- 70 / 10 / 10 / 10 split into train / val / test / hidden, stratified by (source × class).
 - **ODIR images are split by patient**: both eyes of a patient, including patients
   with one normal and one DR eye (236 of them), always land in the same split.
   No patient appears in more than one split (verified).
@@ -89,8 +94,8 @@ source collections were kept only once.
 - **Mendeley scores may look better than they should.** Some patients may have been
   photographed several times, and because Mendeley images are split image by image,
   photos of the same eye can end up in both train and test. Results on Mendeley
-  images are therefore likely higher than on ODIR images. Compare the two (see
-  `metadata.csv`) and think about:
+  images are therefore likely higher than on ODIR images. Compare the two (use the
+  `source` column) and think about:
   - Why could a model score higher on an eye it has effectively already seen?
   - How could you check this yourself, for example by looking at the training images
     most similar to a validation image?
@@ -102,7 +107,8 @@ source collections were kept only once.
 ### Cross-dataset analysis (extension)
 
 The two sources differ in camera, resolution, framing and class balance, so a model
-that works on one may not work on the other. With `metadata.csv` you can, for example:
+that works on one may not work on the other. With the `source` column you can, for
+example:
 
 - report accuracy, F1 and AUC separately for ODIR and Mendeley images in `val` and `test`;
 - train on one source only and test on the other, and compare with training on both;
@@ -125,7 +131,7 @@ that works on one may not work on the other. With `metadata.csv` you can, for ex
 
 5. Work independently, and do not look for or use the original datasets' labels for
    the hidden images. Their labels are withheld on purpose, so please do not try
-   to recover them by re-creating the split.
+   to recover them.
 
 **How to submit:** TBD
 
@@ -134,22 +140,8 @@ that works on one may not work on the other. With `metadata.csv` you can, for ex
 ## Repository layout
 
 ```
-metadata.csv                  split and source (odir / mendeley) of every image, no labels
-scripts/build_dataset.py      rebuilds the dataset from the extracted source folders
 scripts/score_submission.py   scores a submission against the hidden labels (used by the instructor)
 scripts/requirements.txt
-```
-
-## Rebuilding
-
-The scripts are included for transparency. To see how the images were processed,
-extract the source classes into one folder (`ocular_N`, `ocular_D_odir`,
-`mend_healthy`, `mend_DR`; `ocular_D_odir` is the `*_left/_right` files of the
-Kaggle dataset's `D` folder), then:
-
-```bash
-pip install -r scripts/requirements.txt
-python -I scripts/build_dataset.py WORK_DIR RELEASE_DIR PRIVATE_DIR
 ```
 
 ## Attribution and licences
@@ -158,7 +150,7 @@ python -I scripts/build_dataset.py WORK_DIR RELEASE_DIR PRIVATE_DIR
   DOI 10.17632/s9bfhswzjb.1, licence **CC BY 4.0**. Described in: Sharmin et al.,
   "A dataset of color fundus images for the detection and classification of eye
   diseases", *Data in Brief* 57 (2024), 110979.
-- Ocular Disease Dataset (Kaggle, Manan_1717): MIT; it merges ODIR-2019 and other
-  public datasets, so check the original licences before any commercial use.
-- ODIR-2019 Grand Challenge: https://odir2019.grand-challenge.org/ (please cite it
-  in research use).
+- ODIR-2019 Grand Challenge (ODIR-5K): https://odir2019.grand-challenge.org/ (please
+  cite it in research use). Image selection and class labels follow the Kaggle
+  *Ocular Disease Dataset* (Manan_1717, MIT), which merges several public datasets,
+  so check the original licences before any commercial use.
