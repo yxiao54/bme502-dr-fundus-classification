@@ -19,6 +19,10 @@ The images are too large for GitHub and are hosted on Google Drive.
 
 **Access:** please open the links with your ASU account. They are not available to other accounts.
 
+**Metadata:** [`metadata.csv`](metadata.csv) in this repository lists the split and the
+source dataset (`odir` or `mendeley`) of every image, hidden ones included. It
+contains no labels.
+
 ## Dataset
 
 | Split | Normal | DR | Total |
@@ -31,7 +35,7 @@ The images are too large for GitHub and are hosted on Google Drive.
 
 Image format: RGB JPEG, 256×256. Originals are padded with black to a square
 (never cropped or stretched) before resizing. File names are neutral
-(`img_00000.jpg`) and carry no label or source information.
+(`img_00000.jpg`) and carry no label or source information; use `metadata.csv` to look up the source.
 
 Each labelled CSV has the columns `image,label`, where `label` is `normal` or `dr`.
 Encode them as you like, for example `normal` = 0 and `dr` = 1.
@@ -61,8 +65,22 @@ source collections were kept only once.
   images, and the two sources look different (circle shape, colour, resolution).
   A model can score well partly by recognising the source. Does your model perform
   equally well on both kinds of image?
+- **Near-duplicates in the Mendeley part.** The Mendeley images have no patient ID,
+  and images with neighbouring file numbers tend to look alike (probably repeated
+  shots of the same eye). Some of these pairs fall on different sides of a split, so
+  scores on Mendeley images are likely optimistic. ODIR images are split by patient.
 - Classes are mildly imbalanced (56% normal); consider F1 and AUC, not just accuracy.
 - The labels come from the source datasets and were not re-checked by us.
+
+### Cross-dataset analysis (extension)
+
+The two sources differ in camera, resolution, framing and class balance, so a model
+that works on one may not work on the other. With `metadata.csv` you can, for example:
+
+- report accuracy, F1 and AUC separately for ODIR and Mendeley images in `val` and `test`;
+- train on one source only and test on the other, and compare with training on both;
+- discuss why the per-source results differ, and what that means for using such a
+  model on images from a new hospital.
 
 ## Assignment
 
