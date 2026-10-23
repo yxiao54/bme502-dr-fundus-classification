@@ -17,6 +17,22 @@ The images are too large for GitHub and are hosted on Google Drive.
 | `train_val_test.zip` | 119 MB | 5,012 train + 715 val + 705 test images, with `train.csv`, `val.csv`, `test.csv` (labels included) | [Google Drive](https://drive.google.com/file/d/13LAkbYtJi9Imwhvaef5v03r_TNCxpGP8/view?usp=sharing) |
 | `hidden_images.zip` | 13 MB | 715 hidden images, `hidden_images.csv` (**no labels**) | [Google Drive](https://drive.google.com/file/d/1CF3Tj6vLqWVd1MNRmfZw3uxygvHrZoUS/view?usp=sharing) |
 
+### Raw images (optional)
+
+The 256×256 images above were resized by us. If you would rather choose the
+resolution, cropping and padding yourself, the original-resolution images are also
+available. They use the same file names, splits and CSVs as the 256×256 version.
+
+| File | Size | Contents | Link |
+|---|---|---|---|
+| `raw_train_val_test.zip` | 1.6 GB | Same images as `train_val_test.zip`, at original resolution | _TODO: add Google Drive link_ |
+| `raw_hidden_images.zip` | 170 MB | Same images as `hidden_images.zip`, at original resolution | _TODO: add Google Drive link_ |
+
+The raw images vary in size (Mendeley: 2004×1690; ODIR: many sizes, often wide with
+black borders), so you must unify them yourself before training. Image size and
+aspect ratio also reveal the source dataset, so think about how your preprocessing
+interacts with that. The assignment can be done entirely with the 256×256 version.
+
 **Access:** please open the links with your ASU account. They are not available to other accounts.
 
 **Metadata:** `metadata.csv` in this repository has one row per image, hidden ones
