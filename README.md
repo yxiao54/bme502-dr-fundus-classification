@@ -11,14 +11,13 @@ but whose labels are withheld.
 
 ## Download
 
-The images are too large for GitHub and are hosted on Google Drive.
+The images are too large for GitHub and are hosted on Google Drive. Please open all
+links below with your ASU account; they are not available to other accounts.
 
 | File | Size | Contents | Link |
 |---|---|---|---|
 | `train_val_test.zip` | 117 MB | 5,012 train + 715 val + 705 test images, with `train.csv`, `val.csv`, `test.csv` (labels included) | [Google Drive](https://drive.google.com/file/d/1hgfg4Skm6gQVdOQtrjjRLXKvXWXY7PKZ/view?usp=sharing) |
 | `hidden_images.zip` | 13 MB | 715 hidden images, `hidden_images.csv` (**no labels**) | [Google Drive](https://drive.google.com/file/d/11sDqpSBURHdlZy_a0M8QRbfHhLSPie1O/view?usp=sharing) |
-
-**Access:** please open the links with your ASU account. They are not available to other accounts.
 
 ### Raw images (optional)
 
@@ -88,7 +87,7 @@ source collections were kept only once.
 ### Things to think about
 
 - **Source shortcut.** DR makes up 35% of the ODIR images but 60% of the Mendeley
-  images, and the two sources look different (circle shape, colour, resolution).
+  images, and the two sources look different (circle shape, colour, original resolution).
   A model can score well partly by recognising the source. Does your model perform
   equally well on both kinds of image?
 - **Mendeley scores may look better than they should.** Some patients may have been
@@ -113,7 +112,7 @@ source collections were kept only once.
 
 ### Cross-dataset analysis (extension)
 
-The two sources differ in camera, resolution, framing and class balance, so a model
+The two sources differ in camera, original resolution, framing and class balance, so a model
 that works on one may not work on the other. With the `source` column you can, for
 example:
 
