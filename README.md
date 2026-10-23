@@ -58,8 +58,15 @@ source collections were kept only once.
 - **ODIR images are split by patient**: both eyes of a patient, including patients
   with one normal and one DR eye (236 of them), always land in the same split.
   No patient appears in more than one split (verified).
-- Mendeley images have no patient ID and are split by file, so the same patient's
-  images may appear on both sides of a split.
+- **Mendeley images have no subject information.** The Mendeley dataset and its data
+  paper (Sharmin et al., *Data in Brief* 2024) give no patient or eye identifiers,
+  nor how many images were taken per patient. We therefore split the Mendeley images
+  by file. By inspection, some images look like repeated shots of the same eye (in
+  the original numbering, neighbouring files are noticeably more similar than random
+  pairs), so images of the same eye can end up on different sides of a split. Scores
+  on Mendeley images are therefore likely optimistic; the ODIR images are split by
+  patient and are not affected. We recommend reporting results per source (see
+  `metadata.csv`).
 
 ### Things to think about
 
@@ -67,10 +74,6 @@ source collections were kept only once.
   images, and the two sources look different (circle shape, colour, resolution).
   A model can score well partly by recognising the source. Does your model perform
   equally well on both kinds of image?
-- **Near-duplicates in the Mendeley part.** The Mendeley images have no patient ID,
-  and images with neighbouring file numbers tend to look alike (probably repeated
-  shots of the same eye). Some of these pairs fall on different sides of a split, so
-  scores on Mendeley images are likely optimistic. ODIR images are split by patient.
 - Classes are mildly imbalanced (56% normal); consider F1 and AUC, not just accuracy.
 - The labels come from the source datasets and were not re-checked by us.
 
@@ -130,7 +133,9 @@ python -I scripts/build_dataset.py WORK_DIR RELEASE_DIR PRIVATE_DIR
 ## Attribution and licences
 
 - Mendeley Eye Disease Image Dataset: Rashid, Sharmin, Khatun, Hasan, Uddin (2024),
-  DOI 10.17632/s9bfhswzjb.1, licence **CC BY 4.0**.
+  DOI 10.17632/s9bfhswzjb.1, licence **CC BY 4.0**. Described in: Sharmin et al.,
+  "A dataset of color fundus images for the detection and classification of eye
+  diseases", *Data in Brief* 57 (2024), 110979.
 - Ocular Disease Dataset (Kaggle, Manan_1717): MIT; it merges ODIR-2019 and other
   public datasets, so check the original licences before any commercial use.
 - ODIR-2019 Grand Challenge: https://odir2019.grand-challenge.org/ (please cite it
