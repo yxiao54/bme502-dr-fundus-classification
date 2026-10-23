@@ -19,8 +19,11 @@ The images are too large for GitHub and are hosted on Google Drive.
 
 **Access:** please open the links with your ASU account. They are not available to other accounts.
 
-**Metadata:** `metadata.csv` in this repository lists the split and the source dataset
-(`odir` or `mendeley`) of every image, hidden ones included. It contains no labels.
+**Metadata:** `metadata.csv` in this repository has one row per image, hidden ones
+included, and no labels. Columns: `split`, `source` (`odir` or `mendeley`) and, for
+ODIR images only, `patient_group` (an anonymised patient; both eyes of a patient share
+it), `eye`, `age` and `sex`. These last four are empty for Mendeley images, which
+come with no patient information.
 Download it with the *Download raw file* button on its
 [GitHub page](metadata.csv), or directly from
 <https://raw.githubusercontent.com/yxiao54/bme502-dr-fundus-classification/main/metadata.csv>.
