@@ -43,11 +43,8 @@ Encode them as you like, for example `normal` = 0 and `dr` = 1.
 | ODIR-2019 (via the Kaggle *Ocular Disease Dataset* by Manan_1717) | 2,997 | 1,619 | Round fundus images, about 1570 px. Left/right eye of the same patient share an ID. |
 | Mendeley *Eye Disease Image Dataset* (Rashid et al., 2024) | 1,024 | 1,509 | Images from two eye hospitals in Bangladesh; 2004×1690 px, top and bottom of the circle are cut off. |
 
-Cleaning steps: the Kaggle dataset's 1,509 `DR*.jpg` images were dropped because
-they are the same images as the Mendeley DR class; 2 byte-identical duplicates
-were removed. The ODIR5K_Classification Kaggle dataset was **not** used: its
-`normal` class duplicates the Ocular Disease Dataset's `N` class, and its images
-are 224×224 with swapped colour channels.
+Cleaning: exact duplicate images were removed, and images that appear in both
+source collections were kept only once.
 
 ### How the split was made
 
