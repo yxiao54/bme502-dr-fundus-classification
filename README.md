@@ -61,7 +61,7 @@ source collections were kept only once.
 - **Mendeley images have no subject information.** The Mendeley dataset and its data
   paper (Sharmin et al., *Data in Brief* 2024) give no patient or eye identifiers,
   nor how many images were taken per patient. We therefore split the Mendeley images
-  by file. By inspection, some images look like repeated shots of the same eye (in
+  randomly, image by image. By inspection, some images look like repeated shots of the same eye (in
   the original numbering, neighbouring files are noticeably more similar than random
   pairs), so images of the same eye can end up on different sides of a split. Scores
   on Mendeley images are therefore likely optimistic; the ODIR images are split by
