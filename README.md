@@ -1,9 +1,12 @@
 # Normal vs. Diabetic Retinopathy: a binary classification assignment
 
-A classroom dataset of colour fundus photographs for practising binary image
-classification: **normal** (label `normal`) vs. **diabetic retinopathy** (label `dr`).
-Images are merged from two public sources, de-duplicated, resized to 256×256 and
-split into train / validation / test (all labelled) and a hidden set whose images are released but whose labels only the instructor holds.
+BME 502: Fundamentals of AI Medical Apps (Fall 2026 B)
+
+A dataset of colour fundus photographs for practising binary image classification:
+**normal** (label `normal`) vs. **diabetic retinopathy** (label `dr`). Images are
+merged from two public sources, de-duplicated and resized to 256×256. They are split
+into train / validation / test (all labelled) and a hidden set whose images are
+released but whose labels are withheld.
 
 ## Download
 
@@ -23,12 +26,15 @@ The images are too large for GitHub and are hosted on Google Drive.
 | train | 2,826 | 2,186 | 5,012 |
 | val | 404 | 311 | 715 |
 | test (labelled) | 394 | 311 | 705 |
-| hidden (images only, labels held by instructor) | 397 | 318 | 715 |
+| hidden (images only, labels withheld) | 397 | 318 | 715 |
 | **all** | **4,021** | **3,126** | **7,147** |
 
 Image format: RGB JPEG, 256×256. Originals are padded with black to a square
 (never cropped or stretched) before resizing. File names are neutral
 (`img_00000.jpg`) and carry no label or source information.
+
+Each labelled CSV has the columns `image,label`, where `label` is `normal` or `dr`.
+Encode them as you like, for example `normal` = 0 and `dr` = 1.
 
 ### Sources
 
@@ -52,40 +58,49 @@ are 224×224 with swapped colour channels.
 - Mendeley images have no patient ID and are split by file, so the same patient's
   images may appear on both sides of a split.
 
-### Known pitfalls (good discussion material)
+### Things to think about
 
 - **Source shortcut.** DR makes up 35% of the ODIR images but 60% of the Mendeley
   images, and the two sources look different (circle shape, colour, resolution).
-  A model can score well partly by recognising the source. Compare per-source
-  results before trusting a high accuracy.
-- Classes are mildly imbalanced (56% normal); report F1 and AUC, not just accuracy.
+  A model can score well partly by recognising the source. Does your model perform
+  equally well on both kinds of image?
+- Classes are mildly imbalanced (56% normal); consider F1 and AUC, not just accuracy.
 - The labels come from the source datasets and were not re-checked by us.
 
-## Assignment (student version)
+## Assignment
 
 1. Download `train_val_test.zip` and train a binary classifier on `train/`; tune on `val/`.
 2. Evaluate **once**, at the end, on `test/` and report your test accuracy. Do not tune on it.
 3. Download `hidden_images.zip` and predict `prob_dr` (probability of DR) for every image in it.
-4. Submit `submission.csv` with columns `image,prob_dr`, plus your notebook.
-5. Do not look for or use the original datasets' labels for the hidden images.
+4. Prepare `submission.csv` with one row per hidden image and the columns
+   `image,prob_dr`, for example:
 
-Grading uses the hidden set. Compare your own test accuracy with your hidden-set
-result: a large gap suggests the test set was used for tuning.
+   ```
+   image,prob_dr
+   img_00001.jpg,0.93
+   img_00005.jpg,0.07
+   ```
+
+5. Work independently, and do not look for or use the original datasets' labels for
+   the hidden images. Their labels are withheld on purpose, so please do not try
+   to recover them by re-creating the split.
+
+**How to submit:** TBD
+
+**Evaluation:** TBD
 
 ## Repository layout
 
 ```
 scripts/build_dataset.py      rebuilds the dataset from the extracted source folders
-scripts/score_submission.py   instructor-only scoring of a submission against the hidden labels
+scripts/score_submission.py   scores a submission against the hidden labels (used by the instructor)
 scripts/requirements.txt
 ```
 
-`teacher_private/` (hidden labels and the image-to-source mapping) is
-git-ignored and must never be committed or shared with students.
-
 ## Rebuilding
 
-Extract the source classes into one folder (`ocular_N`, `ocular_D_odir`,
+The scripts are included for transparency. To see how the images were processed,
+extract the source classes into one folder (`ocular_N`, `ocular_D_odir`,
 `mend_healthy`, `mend_DR`; `ocular_D_odir` is the `*_left/_right` files of the
 Kaggle dataset's `D` folder), then:
 
@@ -102,6 +117,3 @@ python -I scripts/build_dataset.py WORK_DIR RELEASE_DIR PRIVATE_DIR
   public datasets, so check the original licences before any commercial use.
 - ODIR-2019 Grand Challenge: https://odir2019.grand-challenge.org/ (please cite it
   in research use).
-
-Check that redistributing the images, even on Google Drive, is compatible with
-these terms before sharing the link outside your class.
