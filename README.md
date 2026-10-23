@@ -11,7 +11,8 @@ The images are too large for GitHub and are hosted on Google Drive.
 
 | File | Size | Contents | Link |
 |---|---|---|---|
-| `dataset.zip` | 127 MB | 5,012 train + 715 val + 705 test images with `train.csv`, `val.csv`, `test.csv` (labels included); 715 hidden images with `hidden_images.csv` (**no labels**) | [Google Drive](https://drive.google.com/file/d/1qKhlWGLvTDMPcT37DpYTpyZUX8LBqUBz/view?usp=sharing) |
+| `train_val_test.zip` | 114 MB | 5,012 train + 715 val + 705 test images, with `train.csv`, `val.csv`, `test.csv` (labels included) | [Google Drive](https://drive.google.com/file/d/1qKhlWGLvTDMPcT37DpYTpyZUX8LBqUBz/view?usp=sharing) |
+| `hidden_images.zip` | 13 MB | 715 hidden images, `hidden_images.csv` (**no labels**) | _TODO: add Google Drive link_ |
 
 ## Dataset
 
@@ -60,9 +61,9 @@ are 224×224 with swapped colour channels.
 
 ## Assignment (student version)
 
-1. Download `dataset.zip` and train a binary classifier on `train/`; tune on `val/`.
+1. Download `train_val_test.zip` and train a binary classifier on `train/`; tune on `val/`.
 2. Evaluate **once**, at the end, on `test/` and report your test accuracy. Do not tune on it.
-3. Predict `prob_dr` (probability of DR) for every image in `hidden/`.
+3. Download `hidden_images.zip` and predict `prob_dr` (probability of DR) for every image in it.
 4. Submit `submission.csv` with columns `image,prob_dr`, plus your notebook.
 5. Do not look for or use the original datasets' labels for the hidden images.
 

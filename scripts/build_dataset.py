@@ -122,7 +122,7 @@ def main(work, release, private):
         w = csv.writer(f)
         w.writerow(["image", "label", "source"])
         w.writerows((r["image"], r["label"], r["source"]) for r in rows if r["split"] == "hidden")
-    # one student archive: train/val/test with labels, hidden without
+    # two archives: train/val/test with labels, and hidden images without labels
     def pack(zpath, splits, extra):
         with zipfile.ZipFile(zpath, "w", zipfile.ZIP_STORED) as z:
             for s in splits:
@@ -130,8 +130,8 @@ def main(work, release, private):
                     z.write(p, f"{s}/{p.name}")
             for e in extra:
                 z.write(release / e, e)
-    pack(release / "dataset.zip", ["train", "val", "test", "hidden"],
-         ["train.csv", "val.csv", "test.csv", "hidden_images.csv"])
+    pack(release / "train_val_test.zip", ["train", "val", "test"], ["train.csv", "val.csv", "test.csv"])
+    pack(release / "hidden_images.zip", ["hidden"], ["hidden_images.csv"])
     tally = defaultdict(int)
     for r in rows:
         tally[(r["split"], r["source"], r["label"])] += 1
