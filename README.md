@@ -67,9 +67,16 @@ source collections were kept only once.
   images, and the two sources look different (circle shape, colour, resolution).
   A model can score well partly by recognising the source. Does your model perform
   equally well on both kinds of image?
-- **Mendeley scores may be too optimistic.** Because Mendeley images are split image
-  by image, results on them are likely higher than on ODIR images. Compare the two
-  (see `metadata.csv`): which would you trust more, and why?
+- **Mendeley scores may look better than they should.** Some patients may have been
+  photographed several times, and because Mendeley images are split image by image,
+  photos of the same eye can end up in both train and test. Results on Mendeley
+  images are therefore likely higher than on ODIR images. Compare the two (see
+  `metadata.csv`) and think about:
+  - Why could a model score higher on an eye it has effectively already seen?
+  - How could you check this yourself, for example by looking at the training images
+    most similar to a validation image?
+  - Which result would you trust more for a new patient, and what would you do
+    differently if you had patient IDs?
 - Classes are mildly imbalanced (56% normal); consider F1 and AUC, not just accuracy.
 - The labels come from the source datasets and were not re-checked by us.
 
