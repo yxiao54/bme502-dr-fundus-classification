@@ -150,8 +150,10 @@ example:
 ## Repository layout
 
 ```
+scripts/check_submission.py   checks submission.csv against hidden_images.csv (no labels needed):
+                              python -I scripts/check_submission.py hidden_images.csv submission.csv
 scripts/score_submission.py   scores a submission against the hidden labels (used by the instructor)
-scripts/requirements.txt
+scripts/requirements.txt      packages used by the scripts and the hackathon code
 ```
 
 ## Attribution and licences

@@ -1,1 +1,10 @@
+# Packages the hackathon code and the scripts in this folder use.
+# Versions are not pinned: agree on ONE environment as a team (see the manual).
+# The shared GPU server has torch 2.5.1, torchvision 0.20.1, scikit-learn 0.23.2, pandas 1.3.5.
+numpy
+pandas
+pillow
 scikit-learn
+matplotlib
+torch
+torchvision
