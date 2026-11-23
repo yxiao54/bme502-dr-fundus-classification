@@ -143,7 +143,9 @@ example:
    the hidden images. Their labels are withheld on purpose, so please do not try
    to recover them.
 
-**How to submit:** TBD
+**How to submit:** email `submission.csv` as an attachment to yxiao124@asu.edu, with your
+team name in the subject line. Before sending, check the file with
+`python -I scripts/check_submission.py hidden_images.csv submission.csv`; it must print `OK`.
 
 **Evaluation:** TBD
 
